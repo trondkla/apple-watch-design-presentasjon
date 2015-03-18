@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Apple Watch design guidelines</title>
+
+        <link rel="stylesheet" href="./css/reveal.min.css">
+        <link rel="stylesheet" href="./css/theme/night.css">
+        <link rel="stylesheet" href="./css/style.css">
+
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <div class="slides">
+
+                <section>
+                  <h2>Apple Watch design guidelines</h2>
+                  <p></p>
+                  <p>Trond Klakken / <a href="http://twitter.com/trondkla">@trondkla</a></p>
+                  <p><a href="http://open.bekk.no">open.bekk.no</a></p>
+
+                  <aside class="notes">
+                    Notater
+                  </aside>
+                </section>
+                
+            </div>
+
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.min.js"></script>
+        <script type="text/javascript" src="./vendor/prefixfree.min.js"></script>
+
+        <script>
+
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transition: 'zoom', //Default - None - Fade - Slide - Concave - Zoom
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; }},
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    </body>
+</html>
