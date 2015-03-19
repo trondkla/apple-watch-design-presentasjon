@@ -6,17 +6,17 @@ var gulp = require('gulp'),
   ecstatic = require('ecstatic'),
   http = require('http'),
   lrport = 35729,
-  devport = 8888;
+  devport = 1337;
 
 gulp.task('less', function(){
   gulp.src('less/*.less')
     .pipe(less())
     .pipe(concat('style.css'))
     .pipe(gulp.dest('css/'))
-    .pipe(refresh(lr));;
+    .pipe(refresh(lr));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['less'], function() {
   http.createServer(
     ecstatic({
       root: __dirname + '/',
@@ -26,9 +26,7 @@ gulp.task('watch', function() {
   lr.listen(lrport, function(err) {
     if(err) return console.log(err);
 
-    gulp.watch('less/*.less', function() {
-      gulp.start('less');
-    });
+    gulp.watch('less/*.less', ['less']);
 
     gulp.watch(['index.html'], function (e) {
       lr.changed({body: {files: e.path}});

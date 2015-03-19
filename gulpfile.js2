@@ -1,0 +1,61 @@
+var gulp = require('gulp'),
+  less = require('gulp-less'),
+  sass = require('gulp-sass'),
+  refresh = require('gulp-livereload'),
+  concat = require('gulp-concat'),
+  lr = require('tiny-lr'),
+  lrserver = lr(),
+  ecstatic = require('ecstatic'),
+  http = require('http'),
+  nodemon = require('nodemon'),
+  livereloadport = 35729,
+  devport = 1337;
+
+gulp.task('less', function(){
+  gulp.src('less/*.less')
+    .pipe(less())
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest('css/'))
+    .pipe(refresh(lr));;
+});
+
+gulp.task('html', function() {
+  return gulp.src("app/*.html")
+      .pipe(gulp.dest('dist/'))
+      .pipe(refresh(lrserver));
+})
+
+gulp.task('sass', function(){
+  gulp.src('css/*.scss')
+    .pipe(sass())
+    .pipe(concat('bekk.css'))
+    .pipe(gulp.dest('css/'))
+    .pipe(refresh(lr));;
+});
+
+gulp.task('serve', ['less', 'html'], function() {
+  //Set up your livereload server
+  nodemon({
+    ignore: ["gulpfile.js", "app/*", "dist/*", "node_modules/*"],
+    ext: 'js json html'
+  });
+
+  nodemon.on('start', function () {
+    console.log('App has started');
+  }).on('quit', function () {
+    console.log('App has quit');
+  }).on('restart', function (files) {
+    console.log('App restarted due to: ', files);
+  });
+
+  lrserver.listen(livereloadport);
+});
+
+// Requires gulp >=v3.5.0
+gulp.task('watch', function () {
+    gulp.watch('less/**', ['less']);
+    gulp.watch('index.html', ['html']);
+});
+
+gulp.task('build', ['scripts', 'styles', 'html', 'assets']);
+gulp.task('default', ['serve', 'watch']);
